@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -9,6 +10,28 @@ app.use(cors());
 app.use(express.json());
 
 initializeDatabase();
+
+// Create a new student
+const createStudent = async () => {
+  const newStudent = new Student({
+    name: "John Doe",
+    age: 20,
+    gender: "Male",
+    marks: 85,
+    attendance: 90,
+    grade: "A",
+  });
+
+  try {
+    const savedStudent = await newStudent.save();
+    console.log("Student saved:", savedStudent);
+  } catch (error) {
+    console.error("Error saving student:", error);
+  }
+};
+
+// Call the function to create a student
+createStudent();
 
 app.get("/", (req, res) => {
   res.send("Hello, Express!");
